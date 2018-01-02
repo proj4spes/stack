@@ -8,7 +8,12 @@
 [docker-hub]: https://hub.docker.com/
 [keypair]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair
 
-The Segment Stack is a set of [Terraform][terraform] modules for configuring production infrastructure with AWS, Docker, and ECS.
+This project is an evolution of Segmentio Stack. Why is it an evolution ? Because It uses aws alb instead of elb.
+It allows to have many ecs services on the same instance (using port mappings) and to use  path based routing for sub-services apis (for examples) ...
+ALB is used for both internal and external services. While Alb for external services is a good choice  , alb for internal services is neither cheap enough nor the best solution  to registering  a scaling set of internal services.
+The right solution for internal services could be a consul-registrar based one.  To be integrated...
+
+The Proj4spec Stack is a set of [Terraform][terraform] modules for configuring production infrastructure with AWS, Docker, and ECS.
 It's a more 'curated' set of defaults for configuring your AWS environment, while still allowing you to fully customize it.
 
 
@@ -17,10 +22,10 @@ The Stack comes with:
 - an auto-scaling group of instances to run your services
 - a multi-az VPC with different subnets for availability
 - self-managed services run via docker and ECS
-- an ELB and ECS definition for each service
+- an ALB and ECS definition for each service
 - docker logs that populate in CloudWatch
 - a bastion node for manual SSH access
-- automatic ELB logging to S3
+- automatic ALB logging to S3
 
 Start from scratch or selectively add it to your existing infrastructure, the Stack is yours to customize and tweak.
 
